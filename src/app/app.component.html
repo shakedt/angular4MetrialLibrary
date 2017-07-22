@@ -1,0 +1,95 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<md-grid-list cols="1" rowHeight="50px">
+  <md-grid-tile [colspan]="1"
+                [rowspan]="1"
+
+                >
+  <h1>
+    {{title}}
+    </h1>
+</md-grid-tile>
+</md-grid-list>
+<md-grid-list cols="1" rowHeight="50px">
+<md-grid-tile [colspan]="1"
+              [rowspan]="1"
+
+>
+
+<h3> {{createBook}}</h3>
+</md-grid-tile>
+</md-grid-list>
+<md-grid-list cols="1" rowHeight="100px">
+  <md-grid-tile [colspan]="1"
+                [rowspan]="1"
+
+  >
+<form novalidate #testForm="ngForm">
+  <md-input-container>
+    <input mdInput required placeholder="Book Title"  name='titels' [(ngModel)]="titels">
+    <md-error>This field is required</md-error>
+  </md-input-container>
+  <md-input-container>
+    <input mdInput required placeholder="Book Author"  name='author' [(ngModel)]="author">
+    <md-error>This field is required</md-error>
+  </md-input-container>
+  <md-input-container>
+    <input mdInput required [mdDatepicker]="picker" name="picker" placeholder="Choose a date">
+    <button mdSuffix [mdDatepickerToggle]="picker"></button>
+  </md-input-container>
+  <md-datepicker #picker></md-datepicker>
+  <button type="button" md-raised-button [disabled]="!titels || !author" (click)="addBook(titels, author, date)">Add Book</button>
+</form>
+  </md-grid-tile>
+</md-grid-list>
+<md-grid-list cols="1" rowHeight="20px">
+  <md-grid-tile [colspan]="1" [rowspan]="1">
+Book List:
+
+  </md-grid-tile>
+</md-grid-list>
+
+
+<div *ngFor="let book of books">
+  <md-grid-list cols="3" rowHeight="160px">
+    <md-grid-tile [colspan]="3" [rowspan]="1">
+  <div *ngIf="book.deleted">
+
+    <md-card>
+    title: {{book.title | onlyEnglish | titlecase }} <br>
+    author name: {{book.author}}<br>
+    Date: {{book.date}} <br>
+
+      <button type="button" md-raised-button  (click)="editBook(book, 'asdasd', 'asdsa','asdas');showDialog = !showDialog;">Edit Book</button>
+
+      <app-dialog [(visible)]="showDialog">
+        <h1>Please Enter New Details</h1>
+
+        <form novalidate #testForm="ngForm">
+          <md-input-container>
+            <input mdInput required placeholder="Book Title"  name='titels2' [(ngModel)]="titels2">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput required placeholder="Book Author"  name='author2' [(ngModel)]="author2">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput required [mdDatepicker]="picker2" placeholder="Choose a date">
+            <button mdSuffix [mdDatepickerToggle]="picker2"></button>
+          </md-input-container>
+          <md-datepicker #picker2></md-datepicker>
+          <button type="button" md-raised-button [disabled]="!titels2 || !author2" (click)="editBook(book, titels2, author2,'14/02/1999'); showDialog = !showDialog;">Save Changes</button>
+          <button type="button" md-raised-button (click)="showDialog = !showDialog">Cancel</button>
+        </form>
+      </app-dialog>
+
+      <button type="button" md-raised-button (click)="deleteBook(book)">Delete Book</button>
+    </md-card>
+
+  </div>
+    </md-grid-tile></md-grid-list>
+
+</div>
+
+
+
+
+
